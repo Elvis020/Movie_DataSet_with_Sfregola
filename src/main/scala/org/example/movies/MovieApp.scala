@@ -1,7 +1,8 @@
 package org.example.movies
 import org.example.movies.entities.Movie
+import PrintResultHelpers.*
 
-import PrintResultHelpers._
+import java.time.LocalDateTime
 
 /**
  * Project: get-programming-with-scala-lesson33
@@ -115,6 +116,27 @@ object MovieApp extends App {
     answer = {
       val listOfGenres = movies.flatMap(_.genres).map(_.name).distinct
       s"List of genres include: ${listOfGenres}"
+    }
+  )
+  printResult(
+    "Which movie is the most recent one?",
+    answer = {
+      val recentMovie = movies.map(mov => (mov.title,mov.releaseDate)).sortBy(_._2).last
+      s"The most recent movie is \"${recentMovie._1}\", with release date of ${recentMovie._2.get}"
+    }
+  )
+  printResult(
+    "What is the duration of the longest film?",
+    answer = {
+      val durationOfLongestFilm = movies.sortBy(movie => -movie.duration.getOrElse(0d)).head
+      s"The duration of the longest film is ${durationOfLongestFilm.duration.getOrElse(0d)} mins with title \"${durationOfLongestFilm.title}\""
+    }
+  )
+  printResult(
+    "Which of the movie made the smallest profits",
+    answer = {
+      val smallestProfits = movies.filter(movie => (movie.revenue - movie.budget)>0d).sortBy(movie => -(movie.revenue - movie.budget)).last
+      s"The movie \"${smallestProfits.title}\", made the smallest profit of $$${smallestProfits.revenue - smallestProfits.budget}"
     }
   )
 }
