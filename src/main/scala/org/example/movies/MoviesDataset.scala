@@ -1,8 +1,9 @@
 package org.example.movies
 
-import com.github.tototoshi.csv._
-import org.slf4j.{Logger, LoggerFactory}
+import com.github.tototoshi.csv.*
 import org.example.movies.entities.Movie
+import org.slf4j.{Logger, LoggerFactory}
+//import org.example.movies.entities.Movie
 
 import scala.io.Source
 
@@ -10,6 +11,7 @@ class MoviesDataset(moviesMetadataFile: String) {
 
   private val logger: Logger = LoggerFactory.getLogger(this.getClass)
 
+  // Converting excel file to movie instance for every line
   val movies: List[Movie] = {
     val rawData = loadCSVFile(moviesMetadataFile)
     rawData.flatMap { raw =>
